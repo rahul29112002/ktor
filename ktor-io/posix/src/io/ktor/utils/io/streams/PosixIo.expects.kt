@@ -12,49 +12,60 @@ import platform.posix.*
 public typealias _size_t = size_t // TODO: why?
 public typealias _ssize_t = ssize_t // TODO: why?
 
-public typealias socklen_tVar = UIntVarOf<UInt>
-public typealias socklen_t = UInt
+public expect val SSIZE_MAX: _ssize_t
+
+// TODO: public expect class KX_SOCKET : Number
+public typealias KX_SOCKET = Int
+
+public expect class KX_SOCKADDR_LEN : Number
+
+// ACTUAL_WITHOUT_EXPECT
+
+@Suppress("NO_ACTUAL_FOR_EXPECT")
+public expect class KX_SOCKADDR_LENVar : CPointed
+
+public expect fun kx_internal_is_non_blocking(socket: KX_SOCKET): Int
 
 public expect fun recv(
-    __fd: Int,
+    __fd: KX_SOCKET,
     __buf: CValuesRef<*>?,
     __n: _size_t,
     __flags: Int
 ): _ssize_t
 
 public expect fun send(
-    __fd: Int,
+    __fd: KX_SOCKET,
     __buf: CValuesRef<*>?,
     __n: _size_t,
     __flags: Int
 ): _ssize_t
 
 public expect fun recvfrom(
-    __fd: Int,
+    __fd: KX_SOCKET,
     __buf: CValuesRef<*>?,
     __n: _size_t,
     __flags: Int,
     __addr: CValuesRef<sockaddr>?,
-    __addr_len: CValuesRef<socklen_tVar>?
+    __addr_len: CValuesRef<KX_SOCKADDR_LENVar>?
 ): _ssize_t
 
 public expect fun sendto(
-    __fd: Int,
+    __fd: KX_SOCKET,
     __buf: CValuesRef<*>?,
     __n: _size_t,
     __flags: Int,
     __addr: CValuesRef<sockaddr>?,
-    __addr_len: socklen_t
+    __addr_len: KX_SOCKADDR_LEN
 ): _ssize_t
 
 public expect fun read(
-    __fd: Int,
+    __fd: KX_SOCKET,
     __buf: CValuesRef<*>?,
     __nbytes: _size_t
 ): _ssize_t
 
 public expect fun write(
-    __fd: Int,
+    __fd: KX_SOCKET,
     __buf: CValuesRef<*>?,
     __n: _size_t
 ): _ssize_t
@@ -72,5 +83,3 @@ public expect fun fread(
     __nitems: _size_t,
     __stream: CValuesRef<FILE>?
 ): _size_t
-
-public expect val SSIZE_MAX: _ssize_t

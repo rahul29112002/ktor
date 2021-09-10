@@ -1,7 +1,6 @@
 package io.ktor.utils.io.errors
 
 import io.ktor.utils.io.core.*
-import io.ktor.utils.io.internal.utils.*
 import io.ktor.utils.io.streams.*
 import kotlinx.cinterop.*
 import platform.posix.*
